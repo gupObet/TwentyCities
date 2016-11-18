@@ -121,13 +121,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * sort by field constraintMetric in object USCities in ascending order
+     * sort by field constraintMetric in object USCities in desc order
      */
     private void sortMetricField() {
         Collections.sort(usCitiesArrayList, new Comparator<USCities>() {
             @Override
             public int compare(USCities obj1, USCities obj2) {
-                return Float.valueOf(obj1.getConstMetric()).compareTo(obj2.getConstMetric());
+                return Float.valueOf(obj2.getConstMetric()).compareTo(obj1.getConstMetric());
             }
         });
     }
@@ -145,6 +145,10 @@ public class MainActivity extends AppCompatActivity {
             Log.d(MAIN_ACT, "first ten: " + usCitiesArrayList.get(i).getPop() + "\n");
             Log.d(MAIN_ACT, "first ten: " + usCitiesArrayList.get(i).getLat() + "\n");
             Log.d(MAIN_ACT, "first ten: " + usCitiesArrayList.get(i).getLon() + "\n");
+            Log.d(MAIN_ACT, "first ten: " + usCitiesArrayList.get(i).getDisFromEntPoint() + "\n");
+            Log.d(MAIN_ACT, "first ten: " + usCitiesArrayList.get(i).getConstMetric() + "\n");
+
+
             Log.d(MAIN_ACT, "---------\n");
         }
     }
