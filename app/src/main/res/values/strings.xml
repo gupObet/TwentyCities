@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TwentyCities</string>
+    <string name="enter_latitude">Latitude:</string>
+    <string name="enter_longitude">Longitude</string>
+    <string name="btnClear">Clear</string>
+    <string name="btnSubmit">Submit</string>
+    <string name="results">Twenty Cities:</string>
+</resources>
