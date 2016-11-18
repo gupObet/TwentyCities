@@ -1,11 +1,14 @@
 package com.examples.jamiewong.twentycities;
 
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 //import android.util.JsonReader;
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<USCities> usCitiesArrayList = new ArrayList<>();
     private double entLat;
     private double entLng;
+    private ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,14 +108,13 @@ public class MainActivity extends AppCompatActivity {
             //Todo: does this return exception?
             distance = (enteredPoint.distanceTo(endPoint)) / 1000;  //in km
 
-            //Log.d(MAIN_ACT, "i=" + i + ", distance = " + distance);
-            //Log.d(MAIN_ACT, "\n");
+            //Log.d(MAIN_ACT, "i=" + i + ", distance = " + distance + "\n");
             usCitiesArrayList.get(i).setDisFromEntPoint(distance);
 
             pop = usCitiesArrayList.get(i).getPop();
 
-            if (distance != 0) {
-                constraintMetric = pop / distance;
+            if (pop >= 0) {
+                constraintMetric = distance / (pop + 1);
                 usCitiesArrayList.get(i).setConstMetric(constraintMetric);
             }
         }
@@ -127,19 +130,15 @@ public class MainActivity extends AppCompatActivity {
         Collections.sort(usCitiesArrayList, new Comparator<USCities>() {
             @Override
             public int compare(USCities obj1, USCities obj2) {
-                return Float.valueOf(obj2.getConstMetric()).compareTo(obj1.getConstMetric());
+                return Float.valueOf(obj1.getConstMetric()).compareTo(obj2.getConstMetric());
             }
         });
     }
 
-    private void displayInListView() {
-
-    }
-
-    private void printUSCities() {
+    private void printSortedUSCities() {
 
         Log.d(MAIN_ACT, "printing first 20: \n");
-        for (int i = 1; i < 20/*usCitiesArrayList.size()*/; i++) {
+        for (int i = 1; i < 20; i++) {
             Log.d(MAIN_ACT, "first ten: " + usCitiesArrayList.get(i).getCity() + "\n");
             Log.d(MAIN_ACT, "first ten: " + usCitiesArrayList.get(i).getState() + "\n");
             Log.d(MAIN_ACT, "first ten: " + usCitiesArrayList.get(i).getPop() + "\n");
@@ -147,12 +146,31 @@ public class MainActivity extends AppCompatActivity {
             Log.d(MAIN_ACT, "first ten: " + usCitiesArrayList.get(i).getLon() + "\n");
             Log.d(MAIN_ACT, "first ten: " + usCitiesArrayList.get(i).getDisFromEntPoint() + "\n");
             Log.d(MAIN_ACT, "first ten: " + usCitiesArrayList.get(i).getConstMetric() + "\n");
-
-
             Log.d(MAIN_ACT, "---------\n");
         }
     }
 
+    private ArrayList<String> createListOfFirstTwenty() {
+
+        //Todo, should be make an array of size 20 or use arrayList
+        ArrayList<String> firstTwenty = new ArrayList<>();
+
+        for(int i=1; i<21; i++){
+            firstTwenty.add(usCitiesArrayList.get(i).getCity());
+        }
+        return firstTwenty;
+    }
+
+    private void displayInListView() {
+
+        adapter = new ArrayAdapter<String>(this, R.layout.listview_city_row, R.id.tvCityName,
+                createListOfFirstTwenty());
+
+        listViewCR.setAdapter(adapter);
+
+        bringKeyboardDown();
+
+    }
 
     @Override
     protected void onResume() {
@@ -174,11 +192,25 @@ public class MainActivity extends AppCompatActivity {
 
         calcDistToAllPoints(entLat, entLng);
         sortMetricField();
-        printUSCities();
+        //printSortedUSCities();
+        createListOfFirstTwenty();
         displayInListView();
     }
 
+    private void bringKeyboardDown() {
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(etLat.getWindowToken(), 0);
+
+    }
+
     public void clear(View view) {
+
+        etLat.getText().clear();
+        etLng.getText().clear();
+        adapter.clear();
+        etLat.requestFocus();
 
     }
 }

@@ -62,6 +62,15 @@
         android:layout_alignParentStart="true"
         android:onClick="clear" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:id="@+id/tvResults"
+        android:text="@string/results"
+        android:layout_below="@+id/btnSubmit"
+        android:layout_centerHorizontal="true" />
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -69,17 +78,13 @@
         android:layout_below="@+id/btnClear"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="50dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:id="@+id/tvResults"
-        android:text="@string/results"
-        android:layout_below="@+id/btnClear"
-        android:layout_alignLeft="@+id/etLat"
-        android:layout_alignStart="@+id/etLat" />
+    <View style="@style/Divider"
+        android:layout_below="@+id/tvResults"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_height="2px" />
 
 
 </RelativeLayout>
