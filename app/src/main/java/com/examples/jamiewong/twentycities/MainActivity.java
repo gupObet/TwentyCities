@@ -42,17 +42,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         setResourceViews();
         convertUSjsonToGson();
     }
 
     private void setResourceViews() {
-
         etLat = (EditText) findViewById(R.id.etLat);
         etLng = (EditText) findViewById(R.id.etLng);
         listViewCR = (ListView) findViewById(R.id.lvCityResults);
-
     }
 
     /**
@@ -99,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
         Location enteredPoint = new Location("locationCur");
         enteredPoint.setLatitude(entLat);
         enteredPoint.setLongitude(entLng);
-
         Location endPoint = new Location("locationEnd");
 
         for (int i = 1; i < usCitiesArrayList.size(); i++) {
@@ -108,15 +104,12 @@ public class MainActivity extends AppCompatActivity {
 
             endLat = usCitiesArrayList.get(i).getLat();
             endLng = usCitiesArrayList.get(i).getLon();
-
             endPoint.setLatitude(endLat);
             endPoint.setLongitude(endLng);
 
             distance = (enteredPoint.distanceTo(endPoint)) / 1000;  //in km
-
             //Log.d(MAIN_ACT, "i=" + i + ", distance = " + distance + "\n");
             usCitiesArrayList.get(i).setDisFromEntPoint(distance);
-
             pop = usCitiesArrayList.get(i).getPop();
 
             if (pop < 0) {
@@ -167,7 +160,6 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> createListOfFirstTwenty() {
 
         ArrayList<String> firstTwenty = new ArrayList<>();
-
         for (int i = 1; i < 21; i++) {
             firstTwenty.add(usCitiesArrayList.get(i).getCity());
         }
@@ -182,11 +174,8 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new ArrayAdapter<String>(this, R.layout.listview_city_row, R.id.tvCityName,
                 createListOfFirstTwenty());
-
         listViewCR.setAdapter(adapter);
-
         bringKeyboardDown();
-
     }
 
     @Override
