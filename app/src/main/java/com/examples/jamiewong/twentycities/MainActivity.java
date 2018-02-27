@@ -11,10 +11,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+
 import com.examples.jamiewong.twentycities.DataClasses.USCities;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
@@ -22,7 +24,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-/**Challenge problem 2 -- return 20 twenties, chosen based on distance to entered lat, lng and
+/**
+ * Challenge problem 2 -- return 20 twenties, chosen based on distance to entered lat, lng and
  * population of the city, given by a file US.txt
  * Created by jamiewong 11/17/2016
  */
@@ -69,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
             ims = new InputStreamReader(assetManager.open("US.json"), "UTF-8");
             jsonReader = new JsonReader(ims);
 
-            final Type USCITIESTYPE = new TypeToken<ArrayList<USCities>>() {}.getType();
+            final Type USCITIESTYPE = new TypeToken<ArrayList<USCities>>() {
+            }.getType();
             usCitiesArrayList = gson.fromJson(jsonReader, USCITIESTYPE);
 
         } catch (IOException e) {
@@ -82,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
      * Uses the distanceTo api to calculate the distance between two geopoints.  The enteredPoint is
      * the lat lng entered by the user, and endPoint is a lat lng from the list of cities in US.json
      * file.  After distance is calculated, it is stored in the object.
-     *
+     * <p>
      * Then a metric constraint is calculated using distance/(pop + 1), and stored in the object.
      * Distance is on top so I don't have to check for distance = zero if the same lat, lng.  This
      * metric is used to determine which cities are chosen.  The smallest values of this constraint
@@ -155,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Creates an arrayList firstTwenty with the first twenty cities from usCitiesArrayList
+     *
      * @return firstTwentyArrayList of type USCities
      */
     private ArrayList<String> createListOfFirstTwenty() {
@@ -193,11 +198,12 @@ public class MainActivity extends AppCompatActivity {
      * cities in the US.json file.  Then it sorts the arraylist usCitiesArrayList by the field
      * constMetric, followed by dropping the first twenty cities in a new arrayList firstTwenty and
      * finally display the firstTwenty in a simple listview.
+     *
      * @param view -- button submit
      */
     public void submit(View view) {
 
-        if(!etLat.getText().toString().trim().isEmpty() &&
+        if (!etLat.getText().toString().trim().isEmpty() &&
                 !etLng.getText().toString().trim().isEmpty()) {
 
             entLat = Double.parseDouble(etLat.getText().toString());
@@ -227,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
         etLat.getText().clear();
         etLng.getText().clear();
 
-        if(adapter!=null) {
+        if (adapter != null) {
             adapter.clear();
         }
         etLat.requestFocus();
